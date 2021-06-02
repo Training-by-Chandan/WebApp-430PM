@@ -22,13 +22,13 @@ namespace Broadway.WebApp.Controllers
         }
 
         // GET: Students/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? ids)
         {
-            if (id == null)
+            if (ids == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(id);
+            Student student = db.Students.Find(ids);
             if (student == null)
             {
                 return HttpNotFound();
@@ -60,13 +60,13 @@ namespace Broadway.WebApp.Controllers
         }
 
         // GET: Students/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? ids)
         {
-            if (id == null)
+            if (ids == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(id);
+            Student student = db.Students.Find(ids);
             if (student == null)
             {
                 return HttpNotFound();
@@ -91,13 +91,13 @@ namespace Broadway.WebApp.Controllers
         }
 
         // GET: Students/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? ids)
         {
-            if (id == null)
+            if (ids == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(id);
+            Student student = db.Students.Find(ids);
             if (student == null)
             {
                 return HttpNotFound();
@@ -108,9 +108,9 @@ namespace Broadway.WebApp.Controllers
         // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int ids)
         {
-            Student student = db.Students.Find(id);
+            Student student = db.Students.Find(ids);
             db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("Index");

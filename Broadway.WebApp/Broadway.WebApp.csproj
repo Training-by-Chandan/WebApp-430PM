@@ -184,6 +184,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ParentsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Data\DefaultContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -193,10 +194,19 @@
     <Compile Include="Migrations\202106011149573_student.Designer.cs">
       <DependentUpon>202106011149573_student.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106021159023_parents.cs" />
+    <Compile Include="Migrations\202106021159023_parents.Designer.cs">
+      <DependentUpon>202106021159023_parents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106021203032_relationAdded.cs" />
+    <Compile Include="Migrations\202106021203032_relationAdded.Designer.cs">
+      <DependentUpon>202106021203032_relationAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Parent.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -268,6 +278,8 @@
     <Content Include="Views\Students\Details.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Parents\Index.cshtml" />
+    <Content Include="Views\Parents\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -288,6 +300,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202106011149573_student.resx">
       <DependentUpon>202106011149573_student.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106021159023_parents.resx">
+      <DependentUpon>202106021159023_parents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106021203032_relationAdded.resx">
+      <DependentUpon>202106021203032_relationAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

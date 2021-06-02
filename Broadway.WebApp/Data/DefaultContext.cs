@@ -15,5 +15,7 @@ namespace Broadway.WebApp.Data
         }
 
         public virtual DbSet<Student> Students { get; set; }
+
+        public virtual DbSet<ParentS> ParentS { get; set; }
     }
 }
