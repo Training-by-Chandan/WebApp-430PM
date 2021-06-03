@@ -1,4 +1,6 @@
 ﻿using Broadway.WebApp.Models;
+using Broadway.WebApp.Services;
+using Broadway.WebApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,53 +11,44 @@ namespace Broadway.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        
+        private LoginService _login = new LoginService();
         public ActionResult Index(int? param)
         {
 
-            //Request Object
-
-            //response object 
-            if (param==0)
-            {
-                Response.SetCookie(new HttpCookie("CompanyName", "Broadway"));
-            }
-            
 
             return View();
         }
 
-        [HttpGet]
-        public ActionResult IndexGet(int? id)
+        [HttpPost]
+        public ActionResult Login(LoginRequestViewModel model)
         {
-            var student = new StudentModel();
-            if (id==1)
+            var result = _login.Login(model);
+            if (result.Status)
             {
-                //load some dummy data
-                student.Name = "Anchal";
-                student.Address = "Bardibas";
-            }
-            else if (id==2)
-            {
-                //load some data
-                student.Name = "Guddi";
-                student.Address = "Janakpur";
+                Response.Cookies.Add(new HttpCookie("UserId",result.UserId.ToString()));
+                
+               
+                //logged in 
+                switch (result.UserType)
+                {
+                    
+                    case Common.UserType.Student:
+                        return RedirectToAction("Index", "Student");
+                        break;
+                    case Common.UserType.Teacher:
+                        return RedirectToAction("Index", "Teacher");
+                        break;
+                    default:
+                        return RedirectToAction("Index", "Admin");
+                        break;
+                }
             }
             else
             {
-                //not found
-                student = null;
+                //login error ko code 
+                return View("Index");
             }
-
-            return View(student);
         }
-
-        [HttpPost]
-        public ActionResult IndexPost(StudentModel model)
-        {
-            return View("Index");
-        }
-
         
 
         public ActionResult About()
@@ -73,5 +66,21 @@ namespace Broadway.WebApp.Controllers
 
             return View();
         }
+
+        //private ActionResult CheckLoggedin()
+        //{
+        //    var cookie = Request.Cookies.Get("UserId");
+        //    if (cookie == null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+
+        //}
     }
+
+    
 }

@@ -23,34 +23,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                    
-                    @{
-                        if (TempData["UserType"] == null)
-                        {
-
-                        }
-                        else
-                        {
-                            var usertype = (Broadway.WebApp.Common.UserType)TempData["UserType"];
-                            switch (usertype)
-                            {
-                                case Broadway.WebApp.Common.UserType.Student:
-                                    <li>@Html.ActionLink("Student Dashboard", "Index", "Student")</li>
-                                    <li>@Html.ActionLink("Student Dashboard", "Index", "Student")</li>
-                                    break;
-                                case Broadway.WebApp.Common.UserType.Teacher:
                                     <li>@Html.ActionLink("Teacher Dashboard", "Index", "Teacher")</li>
                                     <li>@Html.ActionLink("Teacher Dashboard", "Index", "Teacher")</li>
-                                    break;
-                                case Broadway.WebApp.Common.UserType.Admin:
-                                    <li>@Html.ActionLink("Admin Dashboard", "Index", "Admin")</li>
-                                    <li>@Html.ActionLink("Admin Dashboard", "Index", "Admin")</li>
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-
+                                   
                 </ul>
                @* @Html.Partial("_LoginPartial")*@
             </div>
