@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Broadway.WebApp.ViewModel.Admin.StudentDashboardViewModel>
+@{
+    ViewBag.Title = "StudentDetails";
+}
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="card card-stats">
+        <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+               <a href="~/admin/studentcreate">
+
+                <i class="fa fa-plus"></i>
+               </a>
+            </div>
+            <p class="card-category">Student</p>
+            <h3 class="card-title">Student Details</h3>
+        </div>
+        <div class="card-body">
+
+            @if (Model == null || Model.Count()==0)
+            {
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Oops!</strong> no record found
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            else
+            {
+
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th class="text-center">Full Name</th>
+                            <th>Address</th>
+                            <th>Gender</th>
+
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td class="text-center">@item.FirstName @item.MiddleName @item.LastName</td>
+                                <td>@item.Address</td>
+                                <td>@item.Gender</td>
+
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-info">
+                                        <i class="material-icons">person</i>
+                                    </button>
+                                    <button type="button" rel="tooltip" class="btn btn-success">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    <button type="button" rel="tooltip" class="btn btn-danger">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+
+
+        </div>
+        <div class="card-footer">
+            <div class="stats">
+                <i class="material-icons">update</i> 
+            </div>
+        </div>
+    </div>
+</div>
+

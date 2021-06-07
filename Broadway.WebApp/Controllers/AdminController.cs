@@ -14,6 +14,20 @@ namespace Broadway.WebApp.Controllers
             return View();
         }
 
-       
+       public ActionResult StudentDetails()
+        {
+            var data = Services.UserService.GetAllStudents();
+            return View(data);
+        }
+
+        public ActionResult TeacherDetails()
+        {
+            return View();
+        }
+
+        public ActionResult StudentCreate()
+        {
+            return View();
+        }
     }
 }

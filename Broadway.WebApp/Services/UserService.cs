@@ -61,5 +61,20 @@ namespace Broadway.WebApp.Services
 
             return response;
         }
+
+        public static List<StudentDashboardViewModel> GetAllStudents()
+        {
+            var data = db.Students.Select(p => new StudentDashboardViewModel
+            {
+                Address = p.Address,
+                FirstName = p.FName,
+                Gender = p.Gender.ToString(),
+                LastName = p.LName,
+                MiddleName = p.MName,
+                StudentId = p.Id,
+                UserName = p.User == null ? "" : p.User.Username
+            }) ;
+            return data.ToList();
+        }
     }
 }
