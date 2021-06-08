@@ -9,11 +9,11 @@ using System.Web;
 
 namespace Broadway.WebApp.Services
 {
-    public static class UserService
+    public  class UserService
     {
-        private static DefaultContext db = new DefaultContext();
+        private  DefaultContext db = new DefaultContext();
 
-        public static StudentUserResponseViewModel CreateStudentUser(StudentUserViewModel model)
+        public  StudentUserResponseViewModel CreateStudentUser(StudentUserViewModel model)
         {
             var response = new StudentUserResponseViewModel();
             try
@@ -62,7 +62,7 @@ namespace Broadway.WebApp.Services
             return response;
         }
 
-        public static List<StudentDashboardViewModel> GetAllStudents()
+        public  List<StudentDashboardViewModel> GetAllStudents()
         {
             var data = db.Students.Select(p => new StudentDashboardViewModel
             {
