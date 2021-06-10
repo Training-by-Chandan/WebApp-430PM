@@ -204,6 +204,7 @@
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\Admin\DashboardComponentViewModel.cs" />
     <Compile Include="ViewModel\Admin\StudentDashboardViewModel.cs" />
     <Compile Include="ViewModel\Admin\StudentUserViewModel.cs" />
     <Compile Include="ViewModel\ResponseViewModel.cs" />
@@ -468,6 +469,9 @@
     <Content Include="Views\Admin\StudentDetails.cshtml" />
     <Content Include="Views\Admin\TeacherDetails.cshtml" />
     <Content Include="Views\Admin\StudentCreate.cshtml" />
+    <Content Include="Views\Admin\_DCI.cshtml" />
+    <Content Include="Views\Admin\_person.cshtml" />
+    <Content Include="Views\Admin\_Modal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

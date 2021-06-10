@@ -1,0 +1,40 @@
+﻿@model Broadway.WebApp.ViewModel.Admin.StudentDashboardViewModel
+
+
+<div class="col-lg-12">
+
+    <div class="card">
+        <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon headericon">
+                <a href="#" class="headericons">
+
+                @if (Model.Gender == "Male")
+                {
+                    <i class="material-icons">male</i>
+
+                }
+                else
+                {
+                    <i class="material-icons">female</i>
+
+                }
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">@Model.FirstName @Model.MiddleName @Model.LastName</h4>
+            
+        </div>
+        <div class="card-footer">
+            <button type="button" rel="tooltip" class="btn btn-info detailsbtn">
+                <i class="material-icons">person</i>
+            </button>
+            <button type="button" rel="tooltip" class="btn btn-success editbtn">
+                <i class="material-icons">edit</i>
+            </button>
+            <button type="button" rel="tooltip" class="btn btn-danger deletebtn">
+                <i class="material-icons">close</i>
+            </button>
+        </div>
+    </div>
+</div>

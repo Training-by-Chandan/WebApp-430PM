@@ -7,17 +7,17 @@
     <div class="card card-stats">
         <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
-               <a href="~/admin/studentcreate">
+                <a href="~/admin/studentcreate">
 
-                <i class="fa fa-plus"></i>
-               </a>
+                    <i class="fa fa-plus"></i>
+                </a>
             </div>
             <p class="card-category">Student</p>
             <h3 class="card-title">Student Details</h3>
         </div>
         <div class="card-body">
 
-            @if (Model == null || Model.Count()==0)
+            @if (Model == null || Model.Count() == 0)
             {
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Oops!</strong> no record found
@@ -28,52 +28,83 @@
             }
             else
             {
+                <div class="row">
 
-                <table class="table">
-                    <thead>
-                        <tr>
 
-                            <th class="text-center">Full Name</th>
-                            <th>Address</th>
-                            <th>Gender</th>
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4">
+                            @Html.Partial("_person", item)
+                        </div>
+                    }
+                </div>
 
-                            <th class="text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                @*<table class="table">
+                        <thead>
                             <tr>
 
-                                <td class="text-center">@item.FirstName @item.MiddleName @item.LastName</td>
-                                <td>@item.Address</td>
-                                <td>@item.Gender</td>
+                                <th class="text-center">Full Name</th>
+                                <th>Address</th>
+                                <th>Gender</th>
 
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" class="btn btn-info">
-                                        <i class="material-icons">person</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" class="btn btn-success">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" class="btn btn-danger">
-                                        <i class="material-icons">close</i>
-                                    </button>
-                                </td>
+                                <th class="text-right">Actions</th>
                             </tr>
-                        }
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
 
-                    </tbody>
-                </table>
+                                    <td class="text-center">@item.FirstName @item.MiddleName @item.LastName</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.Gender</td>
+
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-info">
+                                            <i class="material-icons">person</i>
+                                        </button>
+                                        <button type="button" rel="tooltip" class="btn btn-success">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <button type="button" rel="tooltip" class="btn btn-danger">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>*@
             }
 
 
         </div>
         <div class="card-footer">
             <div class="stats">
-                <i class="material-icons">update</i> 
+                <i class="material-icons">update</i>
             </div>
         </div>
     </div>
 </div>
 
+@Html.Partial("_Modal")
+
+@section scripts
+{
+    <script>
+        $(".detailsbtn").on("click", function() {
+            //console.log("some message");
+            $("#DetailsModal").modal({show:true});
+        });
+
+        $(".editbtn").on("click", function () {
+            //console.log("some message");
+            $("#EditModal").modal({ show: true });
+        });
+
+        $(".deletebtn").on("click", function () {
+            //console.log("some message");
+            $("#DeleteModal").modal({ show: true });
+        });
+    </script>
+}
