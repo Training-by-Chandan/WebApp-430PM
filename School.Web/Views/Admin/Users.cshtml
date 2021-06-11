@@ -1,0 +1,39 @@
+﻿@model IEnumerable<School.Web.ViewModel.UserListViewModel>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+
+<p>
+    @Html.ActionLink("Create New", "UserCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoleCount)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleCount)
+        </td>
+        <td>
+          
+            @Html.ActionLink("Details", "UserDetails", new { id=item.Id }) |
+          
+        </td>
+    </tr>
+}
+
+</table>
