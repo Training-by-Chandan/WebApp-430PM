@@ -6,20 +6,27 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using School.Web.Filters;
 using School.Web.Models;
 
 namespace School.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
+    [AuthFilter]
     public class AcademicYearsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [OverrideAuthorization]
+        [Authorize]
         // GET: AcademicYears
         public ActionResult Index()
         {
             return View(db.AcademicYear.ToList());
         }
 
+        [OverrideAuthorization]
+        [Authorize]
         // GET: AcademicYears/Details/5
         public ActionResult Details(Guid? id)
         {
@@ -42,7 +49,7 @@ namespace School.Web.Controllers
         }
 
         // POST: AcademicYears/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -75,7 +82,7 @@ namespace School.Web.Controllers
         }
 
         // POST: AcademicYears/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using School.Web.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,7 +14,7 @@ namespace School.Web.Controllers
             return View();
         }
 
-        [Authorize]
+        [AuthFilter]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -21,6 +22,7 @@ namespace School.Web.Controllers
             return View();
         }
 
+        [AuthFilter]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
