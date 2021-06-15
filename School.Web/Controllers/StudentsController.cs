@@ -6,118 +6,117 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using School.Web.Filters;
 using School.Web.Models;
 
 namespace School.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class AcademicYearsController : Controller
+    public class StudentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        [OverrideAuthorization]
-        [Authorize]
-        // GET: AcademicYears
+        // GET: Students
         public ActionResult Index()
         {
-            return View(db.AcademicYear.ToList());
+            var students = db.Students.Include(s => s.StudentUser);
+            return View(students.ToList());
         }
 
-        [OverrideAuthorization]
-        [Authorize]
-        // GET: AcademicYears/Details/5
+        // GET: Students/Details/5
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AcademicYear academicYear = db.AcademicYear.Find(id);
-            if (academicYear == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(academicYear);
+            return View(student);
         }
 
-        // GET: AcademicYears/Create
+        // GET: Students/Create
         public ActionResult Create()
         {
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
 
-        // POST: AcademicYears/Create
+        // POST: Students/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,YearName,StartDate,EndDate,Description")] AcademicYear academicYear)
+        public ActionResult Create([Bind(Include = "Id,Name,Address,UserId")] Student student)
         {
             if (ModelState.IsValid)
             {
-                academicYear.Id = Guid.NewGuid();
-                db.AcademicYear.Add(academicYear);
+                student.Id = Guid.NewGuid();
+                db.Students.Add(student);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(academicYear);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", student.UserId);
+            return View(student);
         }
 
-        // GET: AcademicYears/Edit/5
+        // GET: Students/Edit/5
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AcademicYear academicYear = db.AcademicYear.Find(id);
-            if (academicYear == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(academicYear);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", student.UserId);
+            return View(student);
         }
 
-        // POST: AcademicYears/Edit/5
+        // POST: Students/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,YearName,StartDate,EndDate,Description")] AcademicYear academicYear)
+        public ActionResult Edit([Bind(Include = "Id,Name,Address,UserId")] Student student)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(academicYear).State = EntityState.Modified;
+                db.Entry(student).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(academicYear);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", student.UserId);
+            return View(student);
         }
 
-        // GET: AcademicYears/Delete/5
+        // GET: Students/Delete/5
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AcademicYear academicYear = db.AcademicYear.Find(id);
-            if (academicYear == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(academicYear);
+            return View(student);
         }
 
-        // POST: AcademicYears/Delete/5
+        // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            AcademicYear academicYear = db.AcademicYear.Find(id);
-            db.AcademicYear.Remove(academicYear);
+            Student student = db.Students.Find(id);
+            db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

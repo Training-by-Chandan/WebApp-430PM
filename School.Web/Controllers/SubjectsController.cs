@@ -6,118 +6,121 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using School.Web.Filters;
 using School.Web.Models;
 
 namespace School.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class AcademicYearsController : Controller
+    public class SubjectsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        [OverrideAuthorization]
-        [Authorize]
-        // GET: AcademicYears
+        // GET: Subjects
         public ActionResult Index()
         {
-            return View(db.AcademicYear.ToList());
+            var subjects = db.Subjects.Include(s => s.Classes).Include(s => s.Teacher);
+            return View(subjects.ToList());
         }
 
-        [OverrideAuthorization]
-        [Authorize]
-        // GET: AcademicYears/Details/5
+        // GET: Subjects/Details/5
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AcademicYear academicYear = db.AcademicYear.Find(id);
-            if (academicYear == null)
+            Subjects subjects = db.Subjects.Find(id);
+            if (subjects == null)
             {
                 return HttpNotFound();
             }
-            return View(academicYear);
+            return View(subjects);
         }
 
-        // GET: AcademicYears/Create
+        // GET: Subjects/Create
         public ActionResult Create()
         {
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Name");
+            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "Name");
             return View();
         }
 
-        // POST: AcademicYears/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // POST: Subjects/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,YearName,StartDate,EndDate,Description")] AcademicYear academicYear)
+        public ActionResult Create([Bind(Include = "Id,Name,SubjectCode,ClassId,TeacherId")] Subjects subjects)
         {
             if (ModelState.IsValid)
             {
-                academicYear.Id = Guid.NewGuid();
-                db.AcademicYear.Add(academicYear);
+                subjects.Id = Guid.NewGuid();
+                db.Subjects.Add(subjects);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(academicYear);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Name", subjects.ClassId);
+            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "Name", subjects.TeacherId);
+            return View(subjects);
         }
 
-        // GET: AcademicYears/Edit/5
+        // GET: Subjects/Edit/5
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AcademicYear academicYear = db.AcademicYear.Find(id);
-            if (academicYear == null)
+            Subjects subjects = db.Subjects.Find(id);
+            if (subjects == null)
             {
                 return HttpNotFound();
             }
-            return View(academicYear);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Name", subjects.ClassId);
+            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "Name", subjects.TeacherId);
+            return View(subjects);
         }
 
-        // POST: AcademicYears/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // POST: Subjects/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,YearName,StartDate,EndDate,Description")] AcademicYear academicYear)
+        public ActionResult Edit([Bind(Include = "Id,Name,SubjectCode,ClassId,TeacherId")] Subjects subjects)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(academicYear).State = EntityState.Modified;
+                db.Entry(subjects).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(academicYear);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Name", subjects.ClassId);
+            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "Name", subjects.TeacherId);
+            return View(subjects);
         }
 
-        // GET: AcademicYears/Delete/5
+        // GET: Subjects/Delete/5
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AcademicYear academicYear = db.AcademicYear.Find(id);
-            if (academicYear == null)
+            Subjects subjects = db.Subjects.Find(id);
+            if (subjects == null)
             {
                 return HttpNotFound();
             }
-            return View(academicYear);
+            return View(subjects);
         }
 
-        // POST: AcademicYears/Delete/5
+        // POST: Subjects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            AcademicYear academicYear = db.AcademicYear.Find(id);
-            db.AcademicYear.Remove(academicYear);
+            Subjects subjects = db.Subjects.Find(id);
+            db.Subjects.Remove(subjects);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

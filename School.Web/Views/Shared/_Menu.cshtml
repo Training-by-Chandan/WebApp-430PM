@@ -1,13 +1,15 @@
-﻿
-
-@if (User.IsInRole("Admin"))
+﻿@if (User.IsInRole("Admin"))
 {
-    <li class="nav-item">@Html.ActionLink("Role", "Roles", "Admin",null, new {@class="nav-link active" })</li>
-    <li class="nav-item">@Html.ActionLink("User", "Users", "Admin",null, new { @class = "nav-link active" })</li>
+    <li class="nav-item">@Html.ActionLink("Role", "Roles", "Admin", null, new { @class = "nav-link active" })</li>
+    <li class="nav-item">@Html.ActionLink("User", "Users", "Admin", null, new { @class = "nav-link active" })</li>
+    <li class="nav-item">@Html.ActionLink("Class", "Index", "Classes", null, new { @class = "nav-link active" })</li>
+    <li class="nav-item">@Html.ActionLink("Subject", "Index", "Subjects", null, new { @class = "nav-link active" })</li>
+    <li class="nav-item">@Html.ActionLink("Teacher", "Index", "Teachers", null, new { @class = "nav-link active" })</li>
+    <li class="nav-item">@Html.ActionLink("Student", "Index", "Students", null, new { @class = "nav-link active" })</li>
 }
 else if (User.IsInRole("Student"))
 {
     <li class="nav-item">@Html.ActionLink("Home", "Index", "Home")</li>
-        <li class="nav-item">@Html.ActionLink("About", "About", "Home")</li>
-        <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home")</li>
+    <li class="nav-item">@Html.ActionLink("About", "About", "Home")</li>
+    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home")</li>
 }

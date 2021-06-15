@@ -10,22 +10,51 @@ using System.Web.Mvc;
 
 namespace School.Web.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
         // GET: Admin
         public ActionResult Index()
         {
             return View();
         }
 
+        #region Roles
+
         public ActionResult Roles()
         {
-            var roles = db.Roles.Select(p=> new AdminRolesViewModel { Id=p.Id, RoleName=p.Name, UserCount=p.Users.Count });
-            
+            var roles = db.Roles.Select(p => new AdminRolesViewModel { Id = p.Id, RoleName = p.Name, UserCount = p.Users.Count });
+
             return View(roles);
         }
+
+        public ActionResult RoleCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RoleCreate(RoleCreateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var roleStore = new RoleStore<IdentityRole>(db);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                if (!(db.Roles.Any(p => p.Name == model.RoleName)))
+                {
+                    roleManager.Create(new IdentityRole() { Name = model.RoleName });
+                    return RedirectToAction("Roles");
+                }
+            }
+            return View(model);
+        }
+
+        #endregion Roles
+
+        #region Users
 
         public ActionResult Users()
         {
@@ -40,6 +69,7 @@ namespace School.Web.Controllers
             ViewBag.RolesDropDown = rolesData;
             return View();
         }
+
         [HttpPost]
         public ActionResult UserCreate(UserCreateViewModel model)
         {
@@ -49,13 +79,13 @@ namespace School.Web.Controllers
                 {
                     var userStore = new UserStore<ApplicationUser>(db);
                     var userManager = new UserManager<ApplicationUser>(userStore);
-                    var userToInsert = new ApplicationUser { 
-                        UserName = model.UserName, 
-                        FirstName=model.FirstName,
-                        Email = model.Email 
+                    var userToInsert = new ApplicationUser
+                    {
+                        UserName = model.UserName,
+                        FirstName = model.FirstName,
+                        Email = model.Email
                     };
                     userManager.Create(userToInsert, model.Password);
-
 
                     userManager.AddToRole(userToInsert.Id, model.Role);
                     return RedirectToAction("Users");
@@ -67,25 +97,6 @@ namespace School.Web.Controllers
             return View(model);
         }
 
-        public ActionResult RoleCreate()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult RoleCreate(RoleCreateViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var roleStore = new RoleStore<IdentityRole>(db);
-                var roleManager = new RoleManager<IdentityRole>(roleStore);
-
-                if (!(db.Roles.Any(p => p.Name == model.RoleName)))
-                {
-                    roleManager.Create(new IdentityRole() { Name = model.RoleName});
-                    return RedirectToAction("Roles");
-                }
-            }
-            return View(model);
-        }
+        #endregion Users
     }
 }

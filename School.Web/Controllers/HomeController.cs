@@ -14,7 +14,6 @@ namespace School.Web.Controllers
             return View();
         }
 
-        [AuthFilter]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -22,7 +21,6 @@ namespace School.Web.Controllers
             return View();
         }
 
-        [AuthFilter]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
