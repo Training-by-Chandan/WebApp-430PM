@@ -63,6 +63,13 @@ namespace School.Web.Controllers
             return View(users);
         }
 
+        public ActionResult UsersParial()
+        {
+            var users = db.Users.Select(p => new UserListViewModel { Id = p.Id, Username = p.UserName, RoleCount = p.Roles.Count });
+
+            return PartialView("users", users);
+        }
+
         public ActionResult UserCreate()
         {
             var rolesData = db.Roles.Select(p => new SelectListItem { Text = p.Name, Value = p.Name });
