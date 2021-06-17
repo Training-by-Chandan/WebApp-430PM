@@ -9,12 +9,11 @@
 </div>
 
 <div class="row">
-    <span>Here are few html tag helpers</span>
-    @Html.Raw("<h2>html.raw</h2>")
-    @Html.ActionLink("Users", "users", "admin", new { studentid = 5, name = "saroj" }, new { @class = "btn btn-outline-success" })
+    @*<span>Here are few html tag helpers</span>
+        @Html.Raw("<h2>html.raw</h2>")
+        @Html.ActionLink("Users", "users", "admin", new { studentid = 5, name = "saroj" }, new { @class = "btn btn-outline-success" })
 
-    @Html.Action("UsersParial", "admin")
-
+        @Html.Action("UsersParial", "admin")*@
 
     <form id="testform">
         <input type="text" placeholder="username" name="usrname" />
@@ -22,10 +21,11 @@
         <button type="submit">Submit</button>
     </form>
 
-    <canvas id="myChart" width="400" height="400"></canvas>
-
+    @*    <canvas id="myChart" width="400" height="400"></canvas>*@
 </div>
-
+<button id="getStudent" class="btn btn-info">Get Student from localhost:44318</button>
+<div id="studentData">
+</div>
 
 @section scripts
 {
@@ -36,14 +36,38 @@
                 //alert("I am stopping you to submit the form.");
                 var result = prompt("Enter a password.")
                 if (result == "guddi") {
-                   
+
                     reloadChart();
                 }
                 else {
                     alert("wrong password");
                 }
             });
+
+            $("#getStudent").on('click', function () {
+                GetData();
+            });
         });
+        //var data;
+        function GetData() {
+            $.ajax({
+                url: 'https://localhost:44318/api/Values/GetAllStudent',
+                method: 'GET',
+                success: function (a, d) {
+                    //data = a;  
+                    a.forEach(function (a) {
+                        var str = '<div class="alert alert-success">' + a.Name + '</div>';
+                        $("#studentData").append(str);
+                    })
+                },
+                error: function (e, d) {
+                    //console.log("e");
+                    //console.log(e);
+                    //console.log("d");
+                    //console.log(d);
+                }
+            });
+        }
 
         function reloadChart() {
             var ctx = document.getElementById('myChart').getContext('2d');
@@ -83,4 +107,4 @@
             });
         }
     </script>
-    }
+}
