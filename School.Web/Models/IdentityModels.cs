@@ -42,5 +42,6 @@ namespace School.Web.Models
         public virtual DbSet<Teacher> Teachers { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
         public virtual DbSet<Classes> Classes { get; set; }
+        public virtual DbSet<Notification> Notification { get; set; }
     }
 }

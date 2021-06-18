@@ -41,6 +41,9 @@
             </footer>
         </div>
     </div>
+    <div id="toast" class="alert">
+       
+    </div>
 
     @*@Scripts.Render("~/bundles/jquery")*@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
@@ -55,6 +58,45 @@
         $(document).ready(function () {
             $(".datetimepick").datetimepicker();
         });
+    </script>
+
+    <script>
+        function getNotification() {
+            $.ajax({
+                url: '/api/Notification/GetUnreadNotification?userid=246470af-eabb-4861-9c37-d0ba894a9f1f',
+                method: 'GET',
+                success: function (a, d) {
+                    //data = a;
+                    var str = "";
+                    a.forEach(function (a) {
+                        str += '<div class="alert alert-primary" role="alert">'+a.Message+'</div>';
+                        
+                    })
+                        $("#toast").html(str);
+                },
+                error: function (e, d) {
+
+                }
+            }
+            );
+        }
+
+        function readNotification(notificationId) {
+            $.ajax({
+                url: '/api/Notification/ReadNotification?notificationId=' + notificationId,
+                method: 'GET',
+                success: function (a, d) {
+                    //todo remove thhe notification
+
+                },
+                error: function (e, d) {
+
+                }
+            }
+            );
+        }
+
+        var t = setInterval(getNotification, 10000)
     </script>
 </body>
 </html>
