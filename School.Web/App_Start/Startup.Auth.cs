@@ -58,11 +58,11 @@ namespace School.Web
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "895561559588-kccfc8ujmr82rgrk16gcsb1ptlea0n47.apps.googleusercontent.com",
+                ClientSecret = "VgL8Iny7VpojwlLVEeRLWgq1"
+            });
         }
     }
 }

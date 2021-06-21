@@ -5,6 +5,8 @@ using School.Web.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -105,5 +107,50 @@ namespace School.Web.Controllers
         }
 
         #endregion Users
+
+        public ActionResult Sendemail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SendEmail(string EmailId, string name, string subject, string body)
+        {
+            try
+            {
+                sendEmail(EmailId, name, subject, body);
+                ViewBag.message = "Your Email Has been sent";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.message = ex.Message;
+            }
+            return View();
+        }
+
+        private void sendEmail(string EmailId, string name, string subject, string body)
+        {
+            var receiver = new MailAddress(EmailId, name);
+            var sender = new MailAddress("gchandaniw@gmail.com", "Chandan Gupta Bhagat");
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential("gchandaniw@gmail.com", "zbuyhjixnfkltumg")
+            };
+            var attachment = new Attachment("d:\\list.txt");
+            var msg = new MailMessage(sender, receiver)
+            {
+                Subject = subject,
+                Body = body,
+            };
+            msg.Attachments.Add(attachment);
+
+            smtp.Send(msg);
+        }
     }
 }

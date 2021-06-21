@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Sendemail";
+}
+
+<h2>Sendemail</h2>
+@if (!string.IsNullOrWhiteSpace(ViewBag.message))
+{
+    <div class="alert alert-primary">@ViewBag.message</div>
+}
+
+@using (Html.BeginForm("SendEmail", "Admin", FormMethod.Post))
+{
+    <div class="row">
+        <input type="email" name="emailid" placeholder="Email Address" />
+    </div>
+
+    <div class="row">
+        <input type="text" name="name" placeholder="Name" />
+    </div>
+    <div class="row">
+        <input type="text" name="subject" placeholder="Subject" />
+    </div>
+    <div class="row">
+        <textarea name="body" placeholder="Your Message"></textarea>
+    </div>
+    <div class="row">
+        <input type="submit" value="Send" />
+    </div>
+
+}
