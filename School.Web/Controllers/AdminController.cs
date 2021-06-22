@@ -18,7 +18,7 @@ namespace School.Web.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             return View();
         }
