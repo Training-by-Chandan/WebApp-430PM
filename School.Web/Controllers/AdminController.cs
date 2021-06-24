@@ -152,5 +152,42 @@ namespace School.Web.Controllers
 
             smtp.Send(msg);
         }
+
+        [HttpGet]
+        public FileResult GetFile(string filename)
+        {
+            var fullfileName = Server.MapPath("~/Resources/" + filename);
+            var filebytes = System.IO.File.ReadAllBytes(fullfileName);
+
+            var filenamewithExt = System.IO.Path.GetFileName(fullfileName);
+            return File(filebytes, System.Net.Mime.MediaTypeNames.Application.Octet, filenamewithExt);
+        }
+
+        public ActionResult UploadFile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UploadFile(string filename)
+        {
+            var file = Request.Files[0];
+            if (file.ContentLength <= 0)
+            {
+                ViewBag.message = "Invalid files";
+            }
+            else
+            {
+                filename = file.FileName;
+                string ext = System.IO.Path.GetExtension(filename);
+                var fileN = Guid.NewGuid().ToString() + "." + ext;
+                file.SaveAs(Server.MapPath("~/Resources/" + fileN));
+
+                //save the record in db
+
+                ViewBag.message = $"File {filename} uploaded";
+            }
+            return View();
+        }
     }
 }

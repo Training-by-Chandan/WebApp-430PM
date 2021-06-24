@@ -349,6 +349,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Resources\" />
     <Folder Include="Views\Notification\" />
   </ItemGroup>
   <ItemGroup>
@@ -386,6 +387,7 @@
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Admin\Sendemail.cshtml" />
+    <Content Include="Views\Admin\UploadFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202106111038117_initial.resx">
